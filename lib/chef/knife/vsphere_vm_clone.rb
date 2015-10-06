@@ -153,6 +153,11 @@ class Chef::Knife::VsphereVmClone < Chef::Knife::BaseVsphereCommand
          long: '--ssh-password PASSWORD',
          description: 'The ssh password'
 
+  option :use_sudo_password,
+         short: '-use-sudo-password PASSWORD',
+         long: '--use-sudo-password PASSWORD',
+         description: 'Use sudo password'
+
   option :ssh_port,
          short: '-p PORT',
          long: '--ssh-port PORT',
@@ -706,6 +711,7 @@ class Chef::Knife::VsphereVmClone < Chef::Knife::BaseVsphereCommand
       bootstrap = Chef::Knife::BootstrapWindowsSsh.new
       bootstrap.config[:ssh_user] = get_config(:ssh_user)
       bootstrap.config[:ssh_password] = get_config(:ssh_password)
+      bootstrap.config[:use_sudo_password] = get_config(:use_sudo_password)
       bootstrap.config[:ssh_port] = get_config(:ssh_port)
     else
       ui.error('Unsupported Bootstrapping Protocol. Supports : winrm, ssh')
@@ -721,6 +727,7 @@ class Chef::Knife::VsphereVmClone < Chef::Knife::BaseVsphereCommand
     bootstrap.config[:secret_file] = get_config(:secret_file)
     bootstrap.config[:ssh_user] = get_config(:ssh_user)
     bootstrap.config[:ssh_password] = get_config(:ssh_password)
+    bootstrap.config[:use_sudo_password] = get_config(:use_sudo_password)
     bootstrap.config[:ssh_port] = get_config(:ssh_port)
     bootstrap.config[:identity_file] = get_config(:identity_file)
     bootstrap.config[:use_sudo] = true unless get_config(:ssh_user) == 'root'
